@@ -28,7 +28,7 @@ func main() {
 				fp = parseFirstPlace(row)
 			}
 
-			p = parseRowForPlayer("Kevin Na", row)
+			p = parseRowForPlayer("Tiger Woods", row)
 			if (p.Name != "") {
 				return false
 			}
