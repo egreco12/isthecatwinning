@@ -36,7 +36,8 @@ func main() {
 			return true
 		})
 		fmt.Println("first place:", fp)
-		fmt.Println("player:", p)
+		fmt.Println("input player:", p)
+		fmt.Printf("Player %s beat player %s by %d strokes\n", fp.Name, p.Name, -1*(fp.TotalScore - p.TotalScore))
 	})
 
 	c.OnRequest(func(r *colly.Request) {
