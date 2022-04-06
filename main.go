@@ -3,13 +3,40 @@ package main
 import (
 	"fmt"
         "github.com/gocolly/colly/v2"
+	"strconv"
 )
+
+
+type Player struct {
+    Name string
+    TotalScore int
+    RoundOneScore int
+    RoundTwoScore int
+    RoundThreeScore int
+    RoundFourScore int
+}
+
 func main() {
 	c := colly.NewCollector()
 
 	// Find and visit all links
-	c.OnHTML(".PlayerRow__Overview", func(e *colly.HTMLElement) {
-		fmt.Println("Found player", e.Text)
+	c.OnHTML(".Table__TBODY", func(e *colly.HTMLElement) {
+		fp := &Player{}
+		p := &Player{}
+		e.ForEachWithBreak("tr", func(idx int, row *colly.HTMLElement) bool {
+			if (idx == 0) {
+				fp = parseFirstPlace(row)
+			}
+
+			p = parseRowForPlayer("Kevin Na", row)
+			if (p.Name != "") {
+				return false
+			}
+
+			return true
+		})
+		fmt.Println("first place:", fp)
+		fmt.Println("player:", p)
 	})
 
 	c.OnRequest(func(r *colly.Request) {
@@ -17,4 +44,53 @@ func main() {
 	})
 
 	c.Visit("https://www.espn.com/golf/leaderboard?tournamentId=2241")
+}
+
+func parseFirstPlace(e *colly.HTMLElement) *Player {
+	newPlayer := Player{}
+	done := false
+	e.ForEachWithBreak("td", func(idx int, column *colly.HTMLElement) bool {
+		if (idx == 2) {
+			newPlayer.Name = column.Text
+		}
+
+		// idx 3 is total score
+		if (idx == 3) {
+			newPlayer.TotalScore, _ = strconv.Atoi(column.Text)
+			done = true
+		}
+		if (done) {
+			return false
+		}
+
+		return true
+	})
+
+	return &newPlayer
+}
+
+// Hackily go row by row to find the player instead of figuring out a query for it and return a Player
+func parseRowForPlayer(player string, e *colly.HTMLElement) *Player {
+	newPlayer := Player{}
+	found := false
+	done := false
+	e.ForEachWithBreak("td", func(idx int, column *colly.HTMLElement) bool {
+		if (idx == 2) && (column.Text == player) {
+			newPlayer.Name = column.Text
+			found = true
+		}
+
+		// idx 3 is total score
+		if ((idx == 3) && (found)) {
+			newPlayer.TotalScore, _ = strconv.Atoi(column.Text)
+			done = true
+		}
+		if (done) {
+			return false
+		}
+
+		return true
+	})
+
+	return &newPlayer
 }
