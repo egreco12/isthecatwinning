@@ -42,7 +42,7 @@ func main() {
 				fp = parseFirstPlace(row)
 			}
 
-			js = parseRowForPlayer("Sandy Lyle", row)
+			js = parseRowForPlayer("Jordan Spieth", row)
 			if (js.Name != "") {
 				return false
 			}
@@ -81,10 +81,7 @@ func parseFirstPlace(e *colly.HTMLElement) *Player {
 			if (column.Text == "E") {
 				newPlayer.TotalScore = 0
 			}
-			s, e := strconv.Atoi(column.Text)
-			if e != nil {
-				newPlayer.TotalScore = s
-			}
+			newPlayer.TotalScore, _ = strconv.Atoi(column.Text)
 			done = true
 		}
 		if (done) {
