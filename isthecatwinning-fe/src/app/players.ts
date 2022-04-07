@@ -1,6 +1,6 @@
-export interface Player {
-  name: string;
-  totalScore: number;
+export class Player {
+  name: string = "";
+  totalScore: number = 0;
 }
 
 export const MOCK_PLAYERS = [
