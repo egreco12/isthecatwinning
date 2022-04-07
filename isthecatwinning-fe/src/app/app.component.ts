@@ -18,6 +18,9 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    this.getScore();
+    this.scoreService.getJSON().subscribe(
+	res => console.log('HTTP response', res),
+	err => console.log('HTTP Error', err)
+    );
   }
 }

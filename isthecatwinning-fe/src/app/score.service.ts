@@ -8,11 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class ScoreService {
 
-  constructor(private http: HttpClient) {
-    this.getJSON().subscribe(data => {
-      console.log(data);
-    });
-  }
+  constructor(private http: HttpClient) {}
 
   getPlayers(): Player[] {
     return MOCK_PLAYERS;
