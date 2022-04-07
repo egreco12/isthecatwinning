@@ -20,25 +20,42 @@ func main() {
 	// Find and visit all links
 	c.OnHTML(".Table__TBODY", func(e *colly.HTMLElement) {
 		fp := &Player{}
-		p := &Player{}
+		tw := &Player{}
+		js := &Player{}
+
+		// lolll this is so bad, too lazy to refactor tho
 		e.ForEachWithBreak("tr", func(idx int, row *colly.HTMLElement) bool {
 			if (idx == 0) {
 				fp = parseFirstPlace(row)
 			}
 
-			p = parseRowForPlayer("Tiger Woods", row)
-			if (p.Name != "") {
+			tw = parseRowForPlayer("Tiger Woods", row)
+			if (tw.Name != "") {
+				return false
+			}
+
+			return true
+		})
+		e.ForEachWithBreak("tr", func(idx int, row *colly.HTMLElement) bool {
+			if (idx == 0) {
+				fp = parseFirstPlace(row)
+			}
+
+			js = parseRowForPlayer("Jordan Spieth", row)
+			if (js.Name != "") {
 				return false
 			}
 
 			return true
 		})
 		fmt.Println("first place:", fp)
-		fmt.Println("input player:", p)
-		fmt.Printf("Player %s beat player %s by %d strokes\n", fp.Name, p.Name, -1*(fp.TotalScore - p.TotalScore))
+		fmt.Println("tw:", tw)
+		fmt.Println("jordo:", js)
+		fmt.Printf("Player %s beat player %s by %d strokes\n", fp.Name, tw.Name, -1*(fp.TotalScore - tw.TotalScore))
                 var l []Player
 		l = append(l, *fp)
-		l = append(l, *p)
+		l = append(l, *tw)
+		l = append(l, *js)
 		file, _ := json.MarshalIndent(l, "", " ")
 		_ = ioutil.WriteFile("players.json", file, 0644)
 	})

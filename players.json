@@ -6,5 +6,9 @@
  {
   "name": "Tiger Woods",
   "totalScore": -5
+ },
+ {
+  "name": "Jordan Spieth",
+  "totalScore": -18
  }
 ]
