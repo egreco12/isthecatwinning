@@ -1,2 +1,9 @@
-<h2>Tiger is _not_ winning!</h2>
-{{firstPlace.name}} is beating {{otherPlayer.name}} by {{differential}} strokes
+<div *ngIf="tigerIsWinning(); else elseBlock">
+  <h2>Tiger is winning!</h2>
+</div>
+<ng-template #elseBlock>
+  <h2>Tiger is <b>not</b> winning</h2>
+  {{firstPlace.name}} is beating {{tigerWoods.name}} by {{differential}} strokes
+  <br/><br/>
+  btw, tiger's score is {{tigerWoods.totalScore}} and jordo's score is {{jordo.totalScore}}
+</ng-template>

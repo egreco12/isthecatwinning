@@ -11,16 +11,19 @@ export class AppComponent {
   title = 'isthecatwinning';
   players: Player[] = [];
   firstPlace: Player = new Player();
-  otherPlayer: Player = new Player();
+  tigerWoods: Player = new Player();
+  jordo: Player = new Player();
   differential: number = 0;
 
-  constructor(private scoreService: ScoreService) {
-      }
+  constructor(private scoreService: ScoreService) {}
 
-  getScore(): void {
+  tigerIsWinning(): boolean {
+    return this.players[0].name === "Tiger Woods";	
   }
 
+
   ngOnInit(): void {
+    // Current hardcoded order: 0 -> first place, 1 -> tiger woods, 2 -> jordo
     this.scoreService.getJSON().subscribe(
 	res => {
 	 console.log('HTTP response', res);
@@ -28,8 +31,9 @@ export class AppComponent {
            this.players.push(player);
 	 });
          this.firstPlace = this.players[0];
-         this.otherPlayer = this.players[1];
-         this.differential = -1*(this.firstPlace.totalScore - this.otherPlayer.totalScore);
+	 this.tigerWoods = this.players[1];
+         this.jordo = this.players[2];
+         this.differential = -1*(this.firstPlace.totalScore - this.tigerWoods.totalScore);
         },
 	err => console.log('HTTP Error', err)
     );

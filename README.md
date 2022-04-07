@@ -1,0 +1,1 @@
+To run: `alias deploy='cd /home/e_greco12/isthecatwinning && go run . && sudo cp players.json /var/www/html/assets/ && cd isthecatwinning-fe && ng build --prod --optimization=false&& sudo cp dist/isthecatwinning-fe/* /var/www/html/ && cd /home/e_greco12/isthecatwinning'`
