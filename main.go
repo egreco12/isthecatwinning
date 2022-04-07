@@ -83,7 +83,9 @@ func parseFirstPlace(e *colly.HTMLElement) *Player {
 			if (column.Text == "E") {
 				newPlayer.TotalScore = 0
 			}
-			newPlayer.TotalScore, _ = strconv.Atoi(column.Text)
+			if s, err := strconv.Atoi(column.Text); err == nil {
+				newPlayer.TotalScore = s
+			}
 			done = true
 		}
 		if (done) {
@@ -114,7 +116,9 @@ func parseRowForPlayer(player string, e *colly.HTMLElement) *Player {
 			if (column.Text == "E") {
 				newPlayer.TotalScore = 0
 			} else {
-				newPlayer.TotalScore, _ = strconv.Atoi(column.Text)
+				if s, err := strconv.Atoi(column.Text); err == nil {
+					newPlayer.TotalScore = s
+				}
 			}
 			done = true
 		}
