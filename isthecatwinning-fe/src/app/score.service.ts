@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Player, MOCK_PLAYERS } from './players';
+import { Player } from './players'
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -9,10 +9,6 @@ import { Observable } from 'rxjs';
 export class ScoreService {
 
   constructor(private http: HttpClient) {}
-
-  getPlayers(): Player[] {
-    return MOCK_PLAYERS;
-  }
 
   getJSON(): Observable<any> {
     return this.http.get("./assets/players.json");

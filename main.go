@@ -12,6 +12,7 @@ import (
 type Player struct {
 	Name string `json:"name"`
         TotalScore int `json:"totalScore"`
+	DisplayScore string `json:"displayScore"`
 	Cut bool `json:"cut"`
 }
 
@@ -78,6 +79,7 @@ func parseFirstPlace(e *colly.HTMLElement) *Player {
 
 		// idx 3 is total score
 		if (idx == 3) {
+			newPlayer.DisplayScore = column.Text
 			if (column.Text == "E") {
 				newPlayer.TotalScore = 0
 			}
@@ -107,6 +109,7 @@ func parseRowForPlayer(player string, e *colly.HTMLElement) *Player {
 
 		// idx 3 is total score
 		if ((idx == 3) && (found)) {
+			newPlayer.DisplayScore = column.Text
 			newPlayer.Cut = column.Text == "CUT"
 			if (column.Text == "E") {
 				newPlayer.TotalScore = 0
