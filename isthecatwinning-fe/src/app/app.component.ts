@@ -14,12 +14,16 @@ export class AppComponent {
   constructor(private scoreService: ScoreService) {}
 
   getScore(): void {
-    this.players = this.scoreService.getPlayers();	
   }
 
   ngOnInit(): void {
     this.scoreService.getJSON().subscribe(
-	res => console.log('HTTP response', res),
+	res => {
+	 console.log('HTTP response', res);
+         res.forEach((player: Player)=> {
+           this.players.push(player);
+         });
+        },
 	err => console.log('HTTP Error', err)
     );
   }
