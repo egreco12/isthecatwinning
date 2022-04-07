@@ -1,6 +1,7 @@
 package main
 
 import (
+	"io/ioutil"
 	"fmt"
         "github.com/gocolly/colly/v2"
 	"strconv"
@@ -38,8 +39,8 @@ func main() {
                 var l []Player
 		l = append(l, *fp)
 		l = append(l, *p)
-		j, _ := json.Marshal(l)
-		fmt.Println("formatted: ", string(j))
+		file, _ := json.MarshalIndent(l, "", " ")
+		_ = ioutil.WriteFile("players.json", file, 0644)
 	})
 
 	c.OnRequest(func(r *colly.Request) {
