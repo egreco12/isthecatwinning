@@ -4,16 +4,13 @@ import (
 	"fmt"
         "github.com/gocolly/colly/v2"
 	"strconv"
+	"encoding/json"
 )
 
 
 type Player struct {
-    Name string
-    TotalScore int
-    RoundOneScore int
-    RoundTwoScore int
-    RoundThreeScore int
-    RoundFourScore int
+	Name string `json:"name"`
+        TotalScore int `json:"totalScore"`
 }
 
 func main() {
@@ -38,6 +35,11 @@ func main() {
 		fmt.Println("first place:", fp)
 		fmt.Println("input player:", p)
 		fmt.Printf("Player %s beat player %s by %d strokes\n", fp.Name, p.Name, -1*(fp.TotalScore - p.TotalScore))
+                var l []Player
+		l = append(l, *fp)
+		l = append(l, *p)
+		j, _ := json.Marshal(l)
+		fmt.Println("formatted: ", string(j))
 	})
 
 	c.OnRequest(func(r *colly.Request) {
