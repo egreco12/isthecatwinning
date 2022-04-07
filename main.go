@@ -12,6 +12,7 @@ import (
 type Player struct {
 	Name string `json:"name"`
         TotalScore int `json:"totalScore"`
+	Cut bool `json:"cut"`
 }
 
 func main() {
@@ -41,7 +42,7 @@ func main() {
 				fp = parseFirstPlace(row)
 			}
 
-			js = parseRowForPlayer("Jordan Spieth", row)
+			js = parseRowForPlayer("Sandy Lyle", row)
 			if (js.Name != "") {
 				return false
 			}
@@ -77,7 +78,13 @@ func parseFirstPlace(e *colly.HTMLElement) *Player {
 
 		// idx 3 is total score
 		if (idx == 3) {
-			newPlayer.TotalScore, _ = strconv.Atoi(column.Text)
+			if (column.Text == "E") {
+				newPlayer.TotalScore = 0
+			}
+			s, e := strconv.Atoi(column.Text)
+			if e != nil {
+				newPlayer.TotalScore = s
+			}
 			done = true
 		}
 		if (done) {
@@ -96,14 +103,19 @@ func parseRowForPlayer(player string, e *colly.HTMLElement) *Player {
 	found := false
 	done := false
 	e.ForEachWithBreak("td", func(idx int, column *colly.HTMLElement) bool {
-		if (idx == 2) && (column.Text == player) {
+		if ((idx == 2) && (column.Text == player)) {
 			newPlayer.Name = column.Text
 			found = true
 		}
 
 		// idx 3 is total score
 		if ((idx == 3) && (found)) {
-			newPlayer.TotalScore, _ = strconv.Atoi(column.Text)
+			newPlayer.Cut = column.Text == "CUT"
+			if (column.Text == "E") {
+				newPlayer.TotalScore = 0
+			} else {
+				newPlayer.TotalScore, _ = strconv.Atoi(column.Text)
+			}
 			done = true
 		}
 		if (done) {

@@ -1,14 +1,17 @@
 [
  {
   "name": "Jordan Spieth",
-  "totalScore": -18
+  "totalScore": 0,
+  "cut": false
  },
  {
   "name": "Tiger Woods",
-  "totalScore": -5
+  "totalScore": -5,
+  "cut": false
  },
  {
-  "name": "Jordan Spieth",
-  "totalScore": -18
+  "name": "Sandy Lyle",
+  "totalScore": 0,
+  "cut": true
  }
 ]
