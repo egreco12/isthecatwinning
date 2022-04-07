@@ -66,7 +66,7 @@ func main() {
 		fmt.Println("Visiting", r.URL)
 	})
 
-	c.Visit("https://www.espn.com/golf/leaderboard?tournamentId=2241")
+	c.Visit("https://www.espn.com/golf/leaderboard?tournamentId=401353232")
 }
 
 func parseFirstPlace(e *colly.HTMLElement) *Player {

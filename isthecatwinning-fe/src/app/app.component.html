@@ -3,7 +3,7 @@
 </div>
 <ng-template #elseBlock>
   <h2>Tiger is <b>not</b> winning</h2>
-  {{firstPlace.name}} is beating {{tigerWoods.name}} by {{differential}} strokes
+  {{firstPlace.name}} ({{firstPlace.displayScore}}) is beating {{tigerWoods.name}} ({{tigerWoods.displayScore}}) by {{differential}} strokes
   <br/><br/>
   btw, tiger's score is {{tigerWoods.displayScore}} and jordo's score is {{jordo.displayScore}}
 </ng-template>
