@@ -73,12 +73,12 @@ func parseFirstPlace(e *colly.HTMLElement) *Player {
 	newPlayer := Player{}
 	done := false
 	e.ForEachWithBreak("td", func(idx int, column *colly.HTMLElement) bool {
-		if (idx == 2) {
+		if (idx == 3) {
 			newPlayer.Name = column.Text
 		}
 
 		// idx 3 is total score
-		if (idx == 3) {
+		if (idx == 4) {
 			newPlayer.DisplayScore = column.Text
 			if (column.Text == "E") {
 				newPlayer.TotalScore = 0
@@ -104,13 +104,13 @@ func parseRowForPlayer(player string, e *colly.HTMLElement) *Player {
 	found := false
 	done := false
 	e.ForEachWithBreak("td", func(idx int, column *colly.HTMLElement) bool {
-		if ((idx == 2) && (column.Text == player)) {
+		if ((idx == 3) && (column.Text == player)) {
 			newPlayer.Name = column.Text
 			found = true
 		}
 
 		// idx 3 is total score
-		if ((idx == 3) && (found)) {
+		if ((idx == 4) && (found)) {
 			newPlayer.DisplayScore = column.Text
 			newPlayer.Cut = column.Text == "CUT"
 			if (column.Text == "E") {

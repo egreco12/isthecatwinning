@@ -18,7 +18,7 @@ export class AppComponent {
   constructor(private scoreService: ScoreService) {}
 
   tigerIsWinning(): boolean {
-    return this.players[0].name === "Tiger Woods";	
+    return (this.players[0].name === "Tiger Woods") || (this.tigerWoods.totalScore === this.players[0].totalScore);	
   }
 
 
